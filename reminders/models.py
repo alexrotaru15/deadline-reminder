@@ -32,7 +32,7 @@ class Phone(models.Model):
 class Contact(models.Model):
     by_phone = models.BooleanField("Contact via phone")
     by_email = models.BooleanField("Contact via email")
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reminder = models.ForeignKey(Reminder, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.username}"

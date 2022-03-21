@@ -1,0 +1,23 @@
+{% if form.errors %}
+<p>Numele de utilizator sau parola nu sunt corecte. Te rugăm reîncearcă.</p>
+{% endif %}
+<form action="{% url 'users:login' %}" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+    </table>
+    <input type="submit" value="Login">
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+<p>
+    <a href="{% url 'users:register' %}">Lost password?</a>
+    <a href="{% url 'users:password_change' %}">Change password</a>
+    <a href="{% url 'users:password_reset' %}">Password Reset</a>
+</p>

@@ -1,0 +1,14 @@
+{% if not request.user.is_authenticated %}
+<ul>
+    <li>
+        <a href="{% url 'users:login' %}">Login</a>
+    </li>
+    <li>
+        <a href="{% url 'users:register' %}">Register</a>
+    </li>
+</ul>
+{% else %}
+show reminders
+add reminder
+<a href="{% url 'users:logout' %}">logout</a>
+{% endif %}
