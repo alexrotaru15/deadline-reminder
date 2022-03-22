@@ -8,7 +8,12 @@
     </li>
 </ul>
 {% else %}
-show reminders
-add reminder
+<div>
+    existing reminders
+</div>
+<div>
+    add reminder
+</div>
 <a href="{% url 'users:logout' %}">logout</a>
+<a href="{% url 'users:profile' %}">profil</a>
 {% endif %}

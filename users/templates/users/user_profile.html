@@ -5,9 +5,9 @@
     {% endfor %}
 </ul>
 {% endif %}
-<form action="{% url 'users:register' %}" method="post">
+<form action="{% url 'users:profile' %}" method="post">
     {% csrf_token %}
     {{ form.as_ul }}
     <button type="submit">Submit</button>
 </form>
-<a href="{% url 'users:login' %}">Ai deja cont? Login</a>
+<a href="{% url 'reminders:home' %}">Home</a>
