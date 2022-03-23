@@ -1,0 +1,11 @@
+{% if reminder_list %}
+<ul>
+    {% for reminder in reminder_list %}
+    <li>
+        {{ reminder.category }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>nema reminders</p>
+{% endif %}

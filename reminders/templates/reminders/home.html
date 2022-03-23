@@ -9,10 +9,10 @@
 </ul>
 {% else %}
 <div>
-    existing reminders
+    <a href="{% url 'reminders:reminders_list' %}">show reminders</a>
 </div>
 <div>
-    add reminder
+    <a href="{% url 'reminders:add_reminder' %}">add reminder</a>
 </div>
 <a href="{% url 'users:logout' %}">logout</a>
 <a href="{% url 'users:profile' %}">profil</a>

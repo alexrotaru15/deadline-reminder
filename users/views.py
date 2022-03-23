@@ -1,8 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views import generic
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, ProfileForm
@@ -30,9 +27,18 @@ def register(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, user=request.user)
         if form.is_valid():
-            pass
+            if request.user.username != form.cleaned_data['username'] or request.user.email != form.cleaned_data['email']:
+                User.objects.filter(id=request.user.id).update(
+                    username = form.cleaned_data['username'],
+                    email = form.cleaned_data['email']
+                )
+            if request.user.phone.phone_number != form.cleaned_data['phone']:
+                Phone.objects.filter(user=request.user.id).update(
+                    phone_number = form.cleaned_data['phone']
+                )
+            return redirect(reverse('users:profile'))
     else:
-        form = ProfileForm()
+        form = ProfileForm(user=request.user)
     return render(request, 'users/user_profile.html', {'form': form})

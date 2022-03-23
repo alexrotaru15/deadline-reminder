@@ -42,5 +42,14 @@ class RegisterForm(forms.Form):
 
 
 class ProfileForm(RegisterForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.fields['username'].initial = self.user.username
+        self.fields['email'].initial = self.user.email
+        self.fields['phone'].initial = self.user.phone.phone_number
     password = None
     confirm_password = None
+
+    def clean(self):
+        pass
