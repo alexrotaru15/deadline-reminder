@@ -1,3 +1,6 @@
+from tkinter.messagebox import NO
+from django.forms import ValidationError
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
@@ -18,6 +21,12 @@ class Reminder(models.Model):
     by_phone = models.BooleanField("Contact via phone")
     by_email = models.BooleanField("Contact via email")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def clean(self):
+        if self.deadline_date < timezone.now():
+            raise ValidationError({'deadline_date': 'Nu puteți selecta o dată din trecut.'})
+        if not self.by_phone and not self.by_email:
+            raise ValidationError({'by_phone': 'Trebuie să selectați cel puțin o opțiune de contact', 'by_email': ''})
 
     def __str__(self):
         return f"{self.user.username}"
