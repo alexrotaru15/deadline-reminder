@@ -1,18 +1,33 @@
 import datetime
 from numbers import Number
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from sms import send_sms
 from .forms import ReminderForm
 from .models import Reminder
+
 
 def home(request):
     return render(request, 'reminders/home.html')
 
 @login_required
 def add_reminder(request):
+    # send_mail(
+    #     subject='Ola',
+    #     message='Ola buenas noces',
+    #     from_email='webmaster@localhost',
+    #     recipient_list=['alexrotaru1595@gmail.com'],
+    # )
+    # send_sms(
+    #     'mesaj de trimis',
+    #     'django-backend-host',
+    #     [request.user.phone],
+    #     fail_silently=False
+    # )
     if request.method == 'POST':
         form = ReminderForm(request.POST)
         if form.is_valid():

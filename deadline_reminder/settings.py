@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-GB'
 
 TIME_ZONE = 'Europe/Bucharest'
 
@@ -133,3 +133,13 @@ PHONENUMBER_DEFAULT_REGION = 'RO'
 LOGIN_URL = 'users:login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_HOST = 'tbd'
+# EMAIL_PORT = 'tbd'
+# EMAIL_HOST_USER = '?'
+# EMAIL_HOST_PASSWORD = '?'
+# EMAIL_USE_TLS = '?'
+# EMAIL_USE_SSL = '?'
+# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+SMS_BACKEND = 'sms.backends.console.SmsBackend'
+SMS_FILE_PATH = ''

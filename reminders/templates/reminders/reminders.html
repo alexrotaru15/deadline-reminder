@@ -1,10 +1,18 @@
 {% if reminder_list %}
 <ul>
-    {% for reminder in reminder_list %}
-    <li>
-        {{ reminder.category }}
-    </li>
-    {% endfor %}
+    <div>
+        {% for reminder in reminder_list %}
+        <li>
+            {{ reminder.category }}
+            {{ reminder.title }}
+            {{ reminder.description }}
+            {{ reminder.deadline_date }}
+            {{ reminder.reminder_date }}
+            {{ reminder.by_phone }}
+            {{ reminder.by_email }}
+        </li>
+        {% endfor %}
+    </div>
 </ul>
 {% else %}
 <p>nema reminders</p>
