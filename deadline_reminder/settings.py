@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 SMS_BACKEND = 'sms.backends.console.SmsBackend'
 SMS_FILE_PATH = ''
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Bucharest'
