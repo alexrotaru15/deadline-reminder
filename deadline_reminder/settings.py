@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -151,3 +152,9 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Bucharest'
+# CELERY_BEAT_SCHEDULE = {
+#     "scheduled_task": {
+#         "task": "reminders.tasks.add",
+#         "schedule": 10.0
+#     }
+# }

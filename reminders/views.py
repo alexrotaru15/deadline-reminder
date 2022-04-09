@@ -9,10 +9,11 @@ from django.core.mail import send_mail
 from sms import send_sms
 from .forms import ReminderForm
 from .models import Reminder
+# from .tasks import new_reminder
 
 
 def home(request):
-    return render(request, 'reminders/home.html')
+    return render(request, 'reminders/home.html', {'title': 'Acasă'})
 
 @login_required
 def add_reminder(request):
@@ -28,6 +29,7 @@ def add_reminder(request):
     #     [request.user.phone],
     #     fail_silently=False
     # )
+    # new_reminder.delay(request.user.id)
     if request.method == 'POST':
         form = ReminderForm(request.POST)
         if form.is_valid():
