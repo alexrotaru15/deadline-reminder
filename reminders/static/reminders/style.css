@@ -1,5 +1,8 @@
 :root {
-    --main-background: #247881;
+    --main-background: #DAB88B;
+    --second-background: #B7CADB;
+    --text-color: #FDF6EC;
+    --third-color: #F3E9DD;
 }
 
 html {
@@ -19,17 +22,20 @@ body {
 
 #container {
     height: 200px;
+    width: 400px;
 }
 
 #home-page {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .home-link {
     height: 120px;
     width: 120px;
-    border: 1px solid #43919B;
+    background: var(--second-background);
+    border: 1px solid var(--third-color);
     margin: 10px;
     border-radius: 5px;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.25);
@@ -40,7 +46,7 @@ body {
 }
 
 .home-link:hover {
-    background-color: #43919B;
+    filter: brightness(110%);
 }
 
 .home-link:active {
@@ -50,5 +56,58 @@ body {
 a:link,
 a:visited {
     text-decoration: none;
-    color: rgb(217, 247, 217);
+    color: var(--text-color);
+}
+
+#login {
+    cursor: pointer;
+    color: var(--text-color);
+    background: var(--second-background);
+    height: 50px;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.25);
+    margin-top: 15px;
+    font-family: Roboto, sans-serif;
+}
+
+#login:hover {
+    filter: brightness(110%);
+}
+
+#login:focus {
+    outline: none;
+}
+
+.form-group {
+    color: var(--text-color);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.form-group label {}
+
+.form-group input {
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    width: 100%;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+
+.form-group input:valid {
+    border: 1px solid green;
+}
+
+.form-group input:invalid {
+    border: 1px solid red;
+}
+
+#login-error {
+    color: var(--text-color);
+    width: 100%;
 }

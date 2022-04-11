@@ -11,6 +11,7 @@ urlpatterns = [
             template_name='users/login.html',
             authentication_form=AuthenticationForm, 
             next_page='reminders:home', 
+            extra_context = dict(title='Login',),
             redirect_authenticated_user=True
             ), 
         name='login'
