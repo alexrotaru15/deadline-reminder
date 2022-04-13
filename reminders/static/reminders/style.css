@@ -21,7 +21,6 @@ body {
 }
 
 #container {
-    height: 200px;
     width: 400px;
 }
 
@@ -59,7 +58,7 @@ a:visited {
     color: var(--text-color);
 }
 
-#login {
+.submit-btn {
     cursor: pointer;
     color: var(--text-color);
     background: var(--second-background);
@@ -73,11 +72,11 @@ a:visited {
     font-family: Roboto, sans-serif;
 }
 
-#login:hover {
+.submit-btn:hover {
     filter: brightness(110%);
 }
 
-#login:focus {
+.submit-btn:focus {
     outline: none;
 }
 
@@ -87,7 +86,7 @@ a:visited {
     margin-bottom: 15px;
 }
 
-.form-group label {}
+/* .form-group label {} */
 
 .form-group input {
     margin-top: 5px;
@@ -107,7 +106,29 @@ a:visited {
     border: 1px solid red;
 }
 
-#login-error {
-    color: var(--text-color);
+.submit-field-error {
+    color: rgb(153, 15, 15);
     width: 100%;
 }
+
+.under-form-links {
+    margin-top: 15px;
+    font-size: 1rem;
+}
+
+.field-error {
+    font-size: 1rem;
+    margin-top: 2.5px;
+    color: rgb(153, 15, 15);
+}
+
+.messages {
+    list-style: none;
+    padding-left: 0;
+    color: var(--text-color);
+}
+
+/* .message-info {
+    width: 100%;
+    padding-left: 0;
+} */

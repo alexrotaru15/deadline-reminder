@@ -13,32 +13,32 @@ REQUIRED_ERROR = 'Acest câmp este obligatoriu.'
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Utilizator', error_messages={'required': REQUIRED_ERROR, 'min_length': 'Introduceți cel puțin 5 caractere.', 'max_length': 'Introduceți maxim 150 de caractere.'}, validators=[MinLengthValidator(5), MaxLengthValidator(150)])
     email = forms.EmailField(error_messages={'required': REQUIRED_ERROR, 'invalid': 'Adresa de email nu este validă'}, validators=[EmailValidator])
-    phone = PhoneNumberField(widget=forms.TextInput(), required=False, error_messages={'required': REQUIRED_ERROR})
-    password = forms.CharField(widget=forms.PasswordInput())
-    confirm_password = forms.CharField(widget=forms.PasswordInput())
+    phone = PhoneNumberField(label="Telefon", widget=forms.TextInput(), required=False, error_messages={'required': REQUIRED_ERROR, 'invalid': 'Numărul de telefon nu este valid.'})
+    password = forms.CharField(label="Parolă" ,widget=forms.PasswordInput())
+    confirm_password = forms.CharField(label="Confirmare Parolă",widget=forms.PasswordInput())
 
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
         if password != confirm_password:
-            self.add_error('confirm_password', 'Parola nu este la fel.')
+            self.add_error('confirm_password', "Câmpurile 'Parolă' și 'Confirmare Parolă' trebuie să coincidă.")
         try:
             user = User.objects.get(Q(username=self.cleaned_data['username']) | Q(email=self.cleaned_data['email']))
         except ObjectDoesNotExist:
             user = None
         if user is not None:
             if user.username == cleaned_data.get('username'):
-                self.add_error('username', 'Există deja un utilizator cu acest nume')
+                self.add_error('username', 'Există deja un utilizator cu acest nume.')
             if user.email == cleaned_data.get('email'):
-                self.add_error('email', 'Există deja un utilizator cu această adresă de email')
+                self.add_error('email', 'Există deja un utilizator cu această adresă de email.')
         try:
             user_phone_number = Phone.objects.get(phone_number=cleaned_data.get('phone'))
         except ObjectDoesNotExist:
             user_phone_number = None
         if user_phone_number is not None:
             if user_phone_number.phone_number == cleaned_data.get('phone'):
-                self.add_error('phone', 'Există deja un utilizator cu acest număr de telefon')
+                self.add_error('phone', 'Există deja un utilizator cu acest număr de telefon.')
 
 
 class ProfileForm(RegisterForm):

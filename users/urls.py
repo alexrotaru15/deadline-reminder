@@ -2,16 +2,17 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
 from . import views
+from .views import CLoginView
 
 app_name = 'users'
 urlpatterns = [
     path(
         'login/', 
-        auth_views.LoginView.as_view(
+        CLoginView.as_view(
             template_name='users/login.html',
             authentication_form=AuthenticationForm, 
             next_page='reminders:home', 
-            extra_context = dict(title='Login',),
+            extra_context = dict(title='Autentificare',),
             redirect_authenticated_user=True
             ), 
         name='login'

@@ -3,26 +3,24 @@
 {{title}}
 {% endblock title %}
 {% block content %}
-<div class="login-page">
-    {% if form.errors %}
-    <p id="login-error">Numele de utilizator sau parola nu sunt corecte. Te rugăm reîncearcă.</p>
-    {% endif %}
-    <form action="{% url 'users:login' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form.username.label_tag }}
-            {{ form.username }}
-        </div>
-        <div class="form-group">
-            {{ form.password.label_tag }}
-            {{ form.password }}
-        </div>
-        <input type="submit" value="Login" id="login">
-        <input type="hidden" name="next" value="{{ next }}">
-    </form>
-    <p>
-        <a href="{% url 'users:register' %}">Vrei cont?</a>
-        <a href="{% url 'users:password_reset' %}">Ai uitat parola?</a>
-    </p>
+{% if form.errors %}
+<p class="submit-field-error">Credențialele nu sunt corecte. Te rugăm, reîncearcă.</p>
+{% endif %}
+<form action="{% url 'users:login' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+    </div>
+    <div class="form-group">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+    </div>
+    <input type="submit" value="Login" class="submit-btn">
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+<div class="under-form-links">
+    <a href="{% url 'users:register' %}">Vrei cont?</a>
+    <a href="{% url 'users:password_reset' %}">Ai uitat parola?</a>
 </div>
 {% endblock content %}

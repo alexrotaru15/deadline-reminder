@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib import messages
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, ProfileForm
@@ -17,12 +20,13 @@ def register(request):
             )
             phone_number = Phone(phone_number=form.cleaned_data['phone'], user=user)
             phone_number.save()
+            messages.info(request, 'Contul a fost creat cu succes. Acum te poți autentifica.')
             return redirect('users:login')
     else:
         if request.user.is_authenticated:
             return redirect(reverse('reminders:home'))
         form = RegisterForm()
-    return render(request, 'users/register_user.html', {'form': form})
+    return render(request, 'users/register_user.html', {'form': form, 'title': 'Înregistrare'})
 
 @login_required
 def profile(request):
@@ -42,3 +46,11 @@ def profile(request):
     else:
         form = ProfileForm(user=request.user)
     return render(request, 'users/user_profile.html', {'form': form})
+
+
+class CLoginView(LoginView):
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.info(self.request, "Ai fost autentificat cu succes.")
+        return response

@@ -1,13 +1,26 @@
+{% extends 'reminders/base.html' %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
 {% if form.errors %}
-<ul>
-    {% for error in form.errors %}
-    <li>{{error}}</li>
-    {% endfor %}
-</ul>
+<p class="submit-field-error">Corectați erorile de mai jos pentru a vă putea înregistra.</p>
 {% endif %}
 <form action="{% url 'users:register' %}" method="post">
     {% csrf_token %}
-    {{ form.as_ul }}
-    <button type="submit">Submit</button>
+    {% for field in form %}
+    <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+        {% for error in field.errors %}
+        <p class="field-error">{{ error }}</p>
+        {% endfor %}
+
+    </div>
+    {% endfor %}
+    <button type="submit" class="submit-btn">Submit</button>
 </form>
-<a href="{% url 'users:login' %}">Ai deja cont? Login</a>
+<div class="under-form-links">
+    <a href="{% url 'users:login' %}">Ai deja cont?</a>
+</div>
+{% endblock %}
