@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
 from . import views
 from .views import CLoginView
+from .forms import CPasswordChangeForm
 
 app_name = 'users'
 urlpatterns = [
@@ -33,6 +34,7 @@ urlpatterns = [
         'password_change/', 
         auth_views.PasswordChangeView.as_view(
             template_name='users/password_change_form.html', 
+            form_class=CPasswordChangeForm,
             success_url=reverse_lazy('users:password_change_done')
         ), 
         name='password_change'

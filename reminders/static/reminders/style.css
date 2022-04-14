@@ -63,7 +63,8 @@ a:visited {
     color: var(--text-color);
     background: var(--second-background);
     height: 50px;
-    width: 100px;
+    padding: 5px 20px;
+    /* width: 100px; */
     border: none;
     border-radius: 5px;
     font-size: 1.1rem;

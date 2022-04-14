@@ -1,13 +1,24 @@
+{% extends 'reminders/base.html' %}
+{% block content %}
 {% if form.errors %}
-<ul>
-    {% for error in form.errors %}
-    <li>{{error}}</li>
-    {% endfor %}
-</ul>
+<p class="submit-field-error">Corectați erorile de mai jos pentru a vă putea înregistra.</p>
 {% endif %}
 <form action="{% url 'users:profile' %}" method="post">
     {% csrf_token %}
-    {{ form.as_ul }}
-    <button type="submit">Submit</button>
+    {% for field in form %}
+    <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+        {% for error in field.errors %}
+        <p class="field-error">{{ error }}</p>
+        {% endfor %}
+
+    </div>
+    {% endfor %}
+    <button type="submit" class="submit-btn">Submit</button>
 </form>
-<a href="{% url 'reminders:home' %}">Home</a>
+<div class="under-form-links">
+    <a href="{% url 'reminders:home' %}">Home</a>
+    <a href="{% url 'users:password_change' %}">Schimbă parola</a>
+</div>
+{% endblock content %}

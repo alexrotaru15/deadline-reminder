@@ -1,8 +1,11 @@
 from distutils.command.clean import clean
 from django import forms
 from django.core.validators import MinLengthValidator, MaxLengthValidator, EmailValidator
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.password_validation import MinimumLengthValidator
+from django.utils.translation import ngettext
 from django.db.models import Q
 from phonenumber_field.formfields import PhoneNumberField
 from reminders.models import Phone
@@ -53,3 +56,41 @@ class ProfileForm(RegisterForm):
 
     def clean(self):
         pass
+
+
+class CMinimumLengthValidator(MinimumLengthValidator):
+    def __init__(self, min_length=5):
+        self.min_length = min_length
+
+    def validate(self, password, user=None):
+        if len(password) < self.min_length:
+            raise ValidationError(
+                ngettext(
+                    "Parola este prea scurtă. Aceasta trebuie să conțină cel puțin "
+                    "%(min_length)d caracter.",
+                    "Parola este prea scurtă. Aceasta trebuie să conțină cel puțin "
+                    "%(min_length)d caractere.",
+                    self.min_length,
+                ),
+                code="password_too_short",
+                params={"min_length": self.min_length},
+            )
+
+    def get_help_text(self):
+        return ngettext(
+            "Parola trebuie să conțină cel puțin %(min_length)d characte.",
+            "Parola trebuie să conțină cel puțin %(min_length)d charactere.",
+            self.min_length,
+        ) % {"min_length": self.min_length}
+
+class CPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].label = 'Parolă veche'
+        self.fields['new_password1'].label = 'Parolă nouă'
+        self.fields['new_password2'].label = 'Confirmare parolă nouă'
+
+        self.error_messages = {
+        "password_incorrect": "Parola veche nu este corectă.",
+        "password_mismatch": "Parolele nu coincid."
+    }

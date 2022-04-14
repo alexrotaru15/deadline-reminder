@@ -42,7 +42,8 @@ def profile(request):
                 Phone.objects.filter(user=request.user.id).update(
                     phone_number = form.cleaned_data['phone']
                 )
-            return redirect(reverse('users:profile'))
+            messages.info(request, 'Informațiile au fost modificate cu succes.')
+            return redirect(reverse('reminders:home'))
     else:
         form = ProfileForm(user=request.user)
     return render(request, 'users/user_profile.html', {'form': form})
