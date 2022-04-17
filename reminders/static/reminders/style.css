@@ -62,7 +62,8 @@ a:visited {
     max-width: 500px;
 }
 
-.submit-btn {
+.submit-btn,
+#logout-btn {
     cursor: pointer;
     color: var(--text-color);
     background: var(--second-background);
@@ -133,7 +134,48 @@ a:visited {
     color: var(--text-color);
 }
 
-/* .message-info {
-    width: 100%;
-    padding-left: 0;
-} */
+.sm-nav {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-color);
+    font-size: 2rem;
+}
+
+.fa-solid.fa-user {
+    margin-top: 20px;
+}
+
+#logout-btn {
+    background: red;
+    float: right;
+}
+
+.reminders {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    color: var(--text-color);
+}
+
+.reminder-card {
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 7.5px;
+    box-shadow: 0 0 10px 2.5px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.fa-solid.fa-trash-can {
+    float: right;
+    margin: 15px;
+    font-size: 1.2rem;
+    color: rgb(155, 104, 104);
+}

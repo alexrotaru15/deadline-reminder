@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css"
+        integrity="sha384-/frq1SRXYH/bSyou/HUp/hib7RVN1TawQYja658FEOodR/FQBKVqT9Ol+Oz3Olq5" crossorigin="anonymous">
     <title>
         {% if title %}
         {{title}}
@@ -21,6 +23,12 @@
 </head>
 
 <body>
+    {% if request.user.is_authenticated %}
+    <nav class="sm-nav">
+        <a href="{% url 'reminders:home' %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'users:profile' %}"><i class="fa-solid fa-user"></i></a>
+    </nav>
+    {% endif %}
     {% block content %}
     {% endblock content %}
 </body>

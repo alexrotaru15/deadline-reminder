@@ -1,7 +1,7 @@
 import datetime
 from numbers import Number
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -49,3 +49,8 @@ class RemindersView(generic.ListView):
     def get_queryset(self):
         return Reminder.objects.filter(user=self.request.user)
         
+
+def delete_reminder(request, reminder_id):
+    reminder = Reminder.objects.get(pk=reminder_id)
+    reminder.delete()
+    return redirect(reverse('reminders:reminders_list'))

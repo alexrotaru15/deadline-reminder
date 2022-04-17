@@ -14,13 +14,13 @@ class Reminder(models.Model):
         ('others', 'Altele')
     ]
     timers = [
-        (30, '30 de minute'),
-        (60, '1 oră'),
-        (60 * 3, '3 ore'),
-        (60 * 12, '12 ore'),
-        (60 * 24, 'o zi'),
-        (60 * 48, '2 zile'),
-        (60 * 24 * 7, '7 zile')
+        ('30', '30 de minute'),
+        ('60', '1 oră'),
+        ('180', '3 ore'),
+        ('720', '12 ore'),
+        ('1440', 'o zi'),
+        ('2880', '2 zile'),
+        ('10080', '7 zile')
     ]
     category = models.CharField(
         max_length=6, 

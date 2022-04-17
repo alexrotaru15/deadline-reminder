@@ -1,24 +1,23 @@
 {% extends 'reminders/base.html' %}
 {% include "reminders/base_messages.html" %}
 {% block content %}
-{% if reminder_list %}
-<ul>
-    <div>
-        {% for reminder in reminder_list %}
-        <li>
-            {{ reminder.category }}
-            {{ reminder.title }}
-            {{ reminder.description }}
-            {{ reminder.deadline_date }}
-            {{ reminder.reminder_date }}
-            {{ reminder.by_phone }}
-            {{ reminder.by_email }}
-        </li>
-        {% endfor %}
+<div class="reminders">
+    {% if reminder_list %}
+    {% for reminder in reminder_list %}
+    <div class="reminder-card">
+        <a href="{% url 'reminders:delete_reminder' reminder_id=reminder.id %}"><i
+                class="fa-solid fa-trash-can"></i></a>
+        <h2 class="reminder-category">{{ reminder.category }}</h2>
+        <h3 class="reminder-title">{{ reminder.title }}</h3>
+        <p class="reminder-description">{{ reminder.description }}</p>
+        <p class="reminder-deadline">{{ reminder.deadline_date }}</p>
+        <p class="reminder-date">{{ reminder.reminder_date }}</p>
+        <p class="reminder-by-phone">{{ reminder.by_phone }}</p>
+        <p class="reminder-by-email">{{ reminder.by_email }}</p>
     </div>
-</ul>
-{% else %}
-<p>nema reminders</p>
-{% endif %}
-<a href="{% url 'reminders:home' %}">Home</a>
+    {% endfor %}
+    {% else %}
+    <p>Nu aveți nici o activitate.</p>
+    {% endif %}
+</div>
 {% endblock content %}

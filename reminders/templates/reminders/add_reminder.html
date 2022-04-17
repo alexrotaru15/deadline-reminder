@@ -1,14 +1,23 @@
-{% include "reminders/base_messages.html" %}
-{% if form.errors %}
-<ul>
-    {% for error in form.errors %}
-    <li>{{error}}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<form action="{% url 'reminders:add_reminder' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_ul }}
-    <button type="submit">Submit</button>
-</form>
-<a href="{% url 'reminders:home' %}">back to home</a>
+{% extends 'reminders/base.html' %}
+{% block content %}
+<div id="add-reminder-page">
+    {% include "reminders/base_messages.html" %}
+    {% if form.errors %}
+    <p class="submit-field-error">Corectați erorile de mai jos pentru a vă putea înregistra.</p>
+    {% endif %}
+    <form action="{% url 'reminders:add_reminder' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% for error in field.errors %}
+            <p class="field-error">{{ error }}</p>
+            {% endfor %}
+
+        </div>
+        {% endfor %}
+        <button type="submit" class="submit-btn">Adaugă</button>
+    </form>
+</div>
+{% endblock content %}
