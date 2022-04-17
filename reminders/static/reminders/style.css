@@ -58,6 +58,10 @@ a:visited {
     color: var(--text-color);
 }
 
+.auth-page {
+    max-width: 500px;
+}
+
 .submit-btn {
     cursor: pointer;
     color: var(--text-color);

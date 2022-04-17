@@ -2,8 +2,8 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
 from . import views
-from .views import CLoginView
-from .forms import CPasswordChangeForm
+from .views import CLoginView, CPasswordResetConfirmView
+from .forms import CPasswordChangeForm, CPasswordResetConfirmForm
 
 app_name = 'users'
 urlpatterns = [
@@ -65,18 +65,12 @@ urlpatterns = [
     ),
     path(
         'password_reset/confirm/<uidb64>/<token>', 
-        auth_views.PasswordResetConfirmView.as_view(
+        CPasswordResetConfirmView.as_view(
             template_name='users/password_reset_confirm.html',
-            success_url=reverse_lazy('users:password_reset_complete')
+            success_url=reverse_lazy('users:login'),
+            form_class=CPasswordResetConfirmForm
         ), 
         name='password_reset_confirm'
-    ),
-    path(
-        'password_reset/complete', 
-        auth_views.PasswordResetCompleteView.as_view(
-            template_name='users/password_reset_complete.html'
-        ), 
-        name='password_reset_complete'
     ),
     path(
         'profile/',

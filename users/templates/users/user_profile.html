@@ -1,24 +1,27 @@
 {% extends 'reminders/base.html' %}
 {% block content %}
-{% if form.errors %}
-<p class="submit-field-error">Corectați erorile de mai jos pentru a vă putea înregistra.</p>
-{% endif %}
-<form action="{% url 'users:profile' %}" method="post">
-    {% csrf_token %}
-    {% for field in form %}
-    <div class="form-group">
-        {{ field.label_tag }}
-        {{ field }}
-        {% for error in field.errors %}
-        <p class="field-error">{{ error }}</p>
-        {% endfor %}
+<div class="auth-page">
+    {% include "reminders/base_messages.html" %}
+    {% if form.errors %}
+    <p class="submit-field-error">Corectați erorile de mai jos pentru a vă putea înregistra.</p>
+    {% endif %}
+    <form action="{% url 'users:profile' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% for error in field.errors %}
+            <p class="field-error">{{ error }}</p>
+            {% endfor %}
 
+        </div>
+        {% endfor %}
+        <button type="submit" class="submit-btn">Schimbă</button>
+    </form>
+    <div class="under-form-links">
+        <a href="{% url 'reminders:home' %}">Home</a>
+        <a href="{% url 'users:password_change' %}">Schimbă parola</a>
     </div>
-    {% endfor %}
-    <button type="submit" class="submit-btn">Submit</button>
-</form>
-<div class="under-form-links">
-    <a href="{% url 'reminders:home' %}">Home</a>
-    <a href="{% url 'users:password_change' %}">Schimbă parola</a>
 </div>
 {% endblock content %}

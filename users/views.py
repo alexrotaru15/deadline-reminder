@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetConfirmView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -50,8 +50,14 @@ def profile(request):
 
 
 class CLoginView(LoginView):
-    
     def form_valid(self, form):
         response = super().form_valid(form)
         messages.info(self.request, "Ai fost autentificat cu succes.")
+        return response
+
+
+class CPasswordResetConfirmView(PasswordResetConfirmView):
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.info(self.request, "Parola a fost schimbată cu succes. Acum te poți autentifica.")
         return response

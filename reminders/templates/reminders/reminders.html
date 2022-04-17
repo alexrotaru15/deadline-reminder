@@ -1,3 +1,6 @@
+{% extends 'reminders/base.html' %}
+{% include "reminders/base_messages.html" %}
+{% block content %}
 {% if reminder_list %}
 <ul>
     <div>
@@ -18,3 +21,4 @@
 <p>nema reminders</p>
 {% endif %}
 <a href="{% url 'reminders:home' %}">Home</a>
+{% endblock content %}

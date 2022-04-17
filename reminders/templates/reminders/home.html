@@ -1,6 +1,7 @@
 {% extends 'reminders/base.html' %}
 {% block content %}
 <div id="home-page">
+    {% include "reminders/base_messages.html" %}
     {% if not request.user.is_authenticated %}
     <a class="home-link" href="{% url 'users:login' %}">
         <div>Autentificare</div>

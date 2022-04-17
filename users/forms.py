@@ -1,9 +1,9 @@
 from distutils.command.clean import clean
 from django import forms
-from django.core.validators import MinLengthValidator, MaxLengthValidator, EmailValidator
+from django.core.validators import MaxLengthValidator, EmailValidator
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.password_validation import MinimumLengthValidator
 from django.utils.translation import ngettext
 from django.db.models import Q
@@ -14,7 +14,7 @@ from reminders.models import Phone
 REQUIRED_ERROR = 'Acest câmp este obligatoriu.'
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(label='Utilizator', error_messages={'required': REQUIRED_ERROR, 'min_length': 'Introduceți cel puțin 5 caractere.', 'max_length': 'Introduceți maxim 150 de caractere.'}, validators=[MinLengthValidator(5), MaxLengthValidator(150)])
+    username = forms.CharField(label='Utilizator', error_messages={'required': REQUIRED_ERROR, 'max_length': 'Introduceți maxim 150 de caractere.'}, validators=[MaxLengthValidator(50)])
     email = forms.EmailField(error_messages={'required': REQUIRED_ERROR, 'invalid': 'Adresa de email nu este validă'}, validators=[EmailValidator])
     phone = PhoneNumberField(label="Telefon", widget=forms.TextInput(), required=False, error_messages={'required': REQUIRED_ERROR, 'invalid': 'Numărul de telefon nu este valid.'})
     password = forms.CharField(label="Parolă" ,widget=forms.PasswordInput())
@@ -22,16 +22,17 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
+        username = cleaned_data['username']
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
         if password != confirm_password:
             self.add_error('confirm_password', "Câmpurile 'Parolă' și 'Confirmare Parolă' trebuie să coincidă.")
         try:
-            user = User.objects.get(Q(username=self.cleaned_data['username']) | Q(email=self.cleaned_data['email']))
+            user = User.objects.get(Q(username=username) | Q(email=cleaned_data['email']))
         except ObjectDoesNotExist:
             user = None
         if user is not None:
-            if user.username == cleaned_data.get('username'):
+            if user.username == username:
                 self.add_error('username', 'Există deja un utilizator cu acest nume.')
             if user.email == cleaned_data.get('email'):
                 self.add_error('email', 'Există deja un utilizator cu această adresă de email.')
@@ -92,5 +93,16 @@ class CPasswordChangeForm(PasswordChangeForm):
 
         self.error_messages = {
         "password_incorrect": "Parola veche nu este corectă.",
+        "password_mismatch": "Parolele nu coincid."
+    }
+
+
+class CPasswordResetConfirmForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['new_password1'].label = 'Parolă nouă'
+        self.fields['new_password2'].label = 'Confirmare parolă nouă'
+
+        self.error_messages = {
         "password_mismatch": "Parolele nu coincid."
     }
